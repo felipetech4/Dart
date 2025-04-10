@@ -8,7 +8,8 @@
             "name": "Dart",
             "request": "launch",
             "type": "dart",
-            "program": "bin/primeiro_app.dart"
+            "program": "bin/primeiro_app.dart",
+            "console": "externalTerminal"
         }
     ]
 }
