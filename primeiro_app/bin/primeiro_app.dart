@@ -1,10 +1,7 @@
 import 'dart:io';
 
 void main(){
-
-print("Olá Mundo!");
-
-int opcao = 1;
+  int opcao = -1;
 
 menu(opcao);
 
@@ -26,14 +23,34 @@ void menu(int opcao){
   stdout.write("Escolha uma opção: ");
   opcao = int.tryParse(stdin.readLineSync()!)?? 0;
 
-  switch(opcao){
-    case 1 :
-    stdout.write("Digite o nome do produto a ser cadastrado: ");
-    String produto = stdin.readLineSync()!;
-    stdout.write("Digite o valor do produto: ");
-    double valor = double.tryParse(stdin.readLineSync()!) ?? 0.00;
-    cadastrarProduto(mapaProdutos, produto, valor);
-    break;
+    switch(opcao){
+      case 1 :
+      stdout.write("Digite o nome do produto a ser cadastrado: ");
+      String produto = stdin.readLineSync()!;
+      stdout.write("Digite o valor do produto: ");
+      double valor = double.tryParse(stdin.readLineSync()!) ?? 0.00;
+      cadastrarProduto(mapaProdutos, produto, valor);
+      voltarMenu();
+      break;
+
+      case 2 :
+      stdout.write("Digite o nome do produto a ser consultado: ");
+      String produto = stdin.readLineSync()!;
+      detalharProduto(mapaProdutos, produto);
+      voltarMenu();
+      break;
+
+      case 3 : 
+      stdout.write("Digite o nome do produto a ser alterado: ");
+      String produtoAntigo = stdin.readLineSync()!;
+      stdout.write("Digite o nome do produto atualizado: ");
+      String produtoNovo = stdin.readLineSync()!;
+      stdout.write("Digite o preço do produto '$produtoNovo': ");
+      double valor = double.tryParse(stdin.readLineSync()!) ?? 0.00;
+      editarProduto(mapaProdutos, produtoAntigo, produtoNovo, valor);
+      voltarMenu();
+      break;
+    }
   }
 }
 
@@ -42,9 +59,10 @@ void cadastrarProduto(Map<String , double> mapaProdutos, String produto, double 
   print("O produto '$produto' foi cadastrado com sucesso!");
 }
 
-void editarProduto(Map<String , double> mapaProdutos, String produto, double valor){
-  mapaProdutos[produto] = valor;
-  print("O produto '$produto' foi alterado com sucesso!");
+void editarProduto(Map<String , double> mapaProdutos, String produtoAntigo, String produtoNovo, double valor){
+  mapaProdutos.remove(produtoAntigo);
+  mapaProdutos[produtoNovo] = valor;
+  print("Produto alterado para '$produtoNovo' e o seu preço atual é R\$${valor.toStringAsFixed(2)}");
 }
 
 void excluirProduto(Map<String , double> mapaProdutos, String produto){
