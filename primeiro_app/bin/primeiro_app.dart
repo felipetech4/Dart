@@ -3,12 +3,13 @@ import 'dart:io';
 void main(){
   int opcao = -1;
 
-menu(opcao);
-
+  menu(opcao);
 }
 
 void menu(int opcao){
-  
+  Map<String , double> mapaProdutos = {};
+
+  while(opcao != 0){
     print("********** MENU DE PRODUTOS **********");
     print("1 - Cadastrar");
     print("2 - Consultar");
@@ -16,12 +17,10 @@ void menu(int opcao){
     print("4 - Excluir");
     print("5 - Listar Todos");
     print("0 - Sair");
-    print("**************************************");
-  
-  Map<String , double> mapaProdutos = {};
+    print("--------------------------------------");
 
-  stdout.write("Escolha uma opção: ");
-  opcao = int.tryParse(stdin.readLineSync()!)?? 0;
+    stdout.write("Escolha uma opção: ");
+    opcao = int.tryParse(stdin.readLineSync()!)?? 0;
 
     switch(opcao){
       case 1 :
@@ -56,7 +55,9 @@ void menu(int opcao){
 
 void cadastrarProduto(Map<String , double> mapaProdutos, String produto, double valor){
   mapaProdutos[produto] = valor;
+  print("************************************************");
   print("O produto '$produto' foi cadastrado com sucesso!");
+  print("************************************************");
 }
 
 void editarProduto(Map<String , double> mapaProdutos, String produtoAntigo, String produtoNovo, double valor){
@@ -76,7 +77,8 @@ void detalharProduto(Map<String , double> mapaProdutos, String produtoEntrada){
       print("---------------------------------");
       print("Detalhes do Produto");
       print("---------------------------------");
-      print("Produto: $produto | Valor: R\$${valor.toStringAsFixed(2)}");
+      print("Descrição: $produto | Valor: R\$${valor.toStringAsFixed(2)}");
+      print("---------------------------------");
     }
   });
 }
@@ -93,12 +95,12 @@ void listarProdutos(Map<String , double> mapaProdutos){
   });
 }
 
-/*void voltarMenuPrincipal(){
-    stdout.write("Voltar ao menu principaç.");
-    int teste = int.tryParse(stdin.readLineSync()!)?? 0;
-
+void voltarMenu(){
+  print("Pressione ENTER para voltar ao menu inicial...");
+  stdin.readLineSync();
 }
-*/
+
+
 /*
 import 'dart:io';
 
