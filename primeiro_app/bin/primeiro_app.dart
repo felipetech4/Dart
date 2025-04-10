@@ -65,7 +65,9 @@ void cadastrarProduto(Map<String , double> mapaProdutos, String produto, double 
 void editarProduto(Map<String , double> mapaProdutos, String produtoAntigo, String produtoNovo, double valor){
   mapaProdutos.remove(produtoAntigo);
   mapaProdutos[produtoNovo] = valor;
+  print("*************************************************************************");
   print("Produto alterado para '$produtoNovo' e o seu preço atual é R\$${valor.toStringAsFixed(2)}");
+  print("*************************************************************************");
 }
 
 void excluirProduto(Map<String , double> mapaProdutos, String produto){
