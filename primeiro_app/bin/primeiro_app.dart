@@ -1,5 +1,3 @@
-//Pendente. Adicionar no menu os métodos de excluir, editar e sair do menu.
-
 import 'dart:io';
 
 void main(){
