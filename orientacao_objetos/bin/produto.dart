@@ -27,6 +27,12 @@ class Produto{
     }
   }
 
+  void aplicarDesconto(double desconto){
+    desconto = (desconto/100) * preco;
+    preco -= desconto;
+    print("Desconto de R\$${desconto.toStringAsFixed(2)} aplicado. Preço atualizado: R\$${preco.toStringAsFixed(2)}");
+  }
+
   void menuProduto(){
     int opcao = -1;
     while(opcao != 0){
@@ -34,6 +40,7 @@ class Produto{
       print("1 - Exibir Produto");
       print("2 - Repor Estoque");
       print("3 - Vender Produto");
+      print("4 - Aplicar Desconto");
       print("0 - Sair...");
 
       stdout.write("Digite uma opção: ");
@@ -59,6 +66,13 @@ class Produto{
         voltarMenu();
         break;
 
+        case 4 :
+        stdout.write("Informe a porcentagem do desconto a ser aplicado: ");
+        double desconto = double.tryParse(stdin.readLineSync()!)??0.00;
+        aplicarDesconto(desconto);
+        voltarMenu();
+        break;
+        
         case 0 :
         print("Saindo do menu de produtos...");
         stdin.readLineSync();
