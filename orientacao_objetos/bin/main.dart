@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'Carro.dart';
+import 'package:collection/collection.dart';
 
 void main() {
   List<Carro> carros = [];
@@ -70,6 +71,7 @@ void main() {
         if (carros.isEmpty) {
           print("A lista de carros está vazia...");
         } else {
+          int quantidadeInicial = carros.length;
           stdout.write("Modelo a ser excluído: ");
           String modelo = stdin.readLineSync()!;
 
@@ -106,6 +108,7 @@ void main() {
         }else{
           print("Carro não encontrado.");
         }
+
         voltarMenu();
         break;
 
