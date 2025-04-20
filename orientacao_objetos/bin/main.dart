@@ -46,6 +46,24 @@ void main() {
         break;
 
       case 3:
+        if(carros.isEmpty){
+          print("Lista de carros está vazia.");
+        }else{
+          stdout.write("Digite o modelo a ser buscado: ");
+          String busca = stdin.readLineSync()!.toLowerCase();
+
+          List<Carro> encontrados = carros.where((carro) => carro.modelo.toLowerCase().contains(busca)).toList();
+
+          if(encontrados.isEmpty){
+            print("Nenhum carro encontrado :(");
+          }else{
+            for(Carro carro in encontrados){
+              carro.exibirDetalhes();
+              print("----------------------");
+            }
+          }
+        }
+        voltarMenu();
         break;
 
       case 4:
