@@ -73,15 +73,38 @@ void main() {
           stdout.write("Modelo a ser excluído: ");
           String modelo = stdin.readLineSync()!;
 
-          for (Carro carro in carros) {
-            if (carro.modelo == modelo) {
-              carros.remove(carro);
-              print("O modelo foi removido com sucesso!");
-            } else {
-              print("Modelo não encontrado...");
-            }
-            break;
+          carros.removeWhere((carro) => carro.modelo == modelo);
+
+          if(carros.length < quantidadeInicial){
+            print("Carro removido com sucesso!");
+          }else{
+            print("Carro não encontrado");
           }
+        }
+        voltarMenu();
+        break;
+
+      case 5 :
+        stdout.write("Digite o nome do modelo a ser alterado: ");
+        String modelo = stdin.readLineSync()!;
+
+        Carro? carroEncontrado = carros.firstWhereOrNull((carro) => modelo == carro.modelo);
+
+        if(carroEncontrado != null){
+          stdout.write("Marca atual: ${carroEncontrado.marca} | Nova marca: ");
+          String novaMarca = stdin.readLineSync()!;
+          stdout.write("Marca atual: ${carroEncontrado.marca} | Nova marca: ");
+          String novoModelo = stdin.readLineSync()!;
+          stdout.write("Marca atual: ${carroEncontrado.marca} | Nova marca: ");
+          int novoAno = int.tryParse(stdin.readLineSync()!) ?? 0;
+
+          carroEncontrado.marca = novaMarca;
+          carroEncontrado.modelo = novoModelo;
+          carroEncontrado.ano = novoAno;
+
+          print("Carro atualizado com sucesso!");
+        }else{
+          print("Carro não encontrado.");
         }
         voltarMenu();
         break;
