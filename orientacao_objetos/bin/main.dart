@@ -75,8 +75,8 @@ void main() {
           stdout.write("Modelo a ser excluído: ");
           String modelo = stdin.readLineSync()!;
 
-          carros.removeWhere((carro) => carro.modelo == modelo);
-
+          carros.removeWhere((carro) => carro.modelo == modelo);    
+                
           if(carros.length < quantidadeInicial){
             print("Carro removido com sucesso!");
           }else{
@@ -95,10 +95,10 @@ void main() {
         if(carroEncontrado != null){
           stdout.write("Marca atual: ${carroEncontrado.marca} | Nova marca: ");
           String novaMarca = stdin.readLineSync()!;
-          stdout.write("Marca atual: ${carroEncontrado.marca} | Nova marca: ");
+          stdout.write("Modelo atual: ${carroEncontrado.modelo} | Novo modelo: ");
           String novoModelo = stdin.readLineSync()!;
-          stdout.write("Marca atual: ${carroEncontrado.marca} | Nova marca: ");
-          int novoAno = int.tryParse(stdin.readLineSync()!) ?? 0;
+          stdout.write("Ano atual: ${carroEncontrado.ano} | Novo ano: ");
+          int novoAno = int.tryParse(stdin.readLineSync()!) ?? carroEncontrado.ano;
 
           carroEncontrado.marca = novaMarca;
           carroEncontrado.modelo = novoModelo;
