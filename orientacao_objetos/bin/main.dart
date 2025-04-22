@@ -76,7 +76,7 @@ void main() {
           String modelo = stdin.readLineSync()!;
 
           carros.removeWhere((carro) => carro.modelo == modelo);    
-                
+
           if(carros.length < quantidadeInicial){
             print("Carro removido com sucesso!");
           }else{
