@@ -1,6 +1,6 @@
-import 'carro.dart';
+import 'veiculo.dart';
 
-class CarroEsportivo extends Carro {
+class CarroEsportivo extends Veiculo {
   bool _modoTurbo = false;
   //Construtor
   CarroEsportivo(String marca, String modelo, int ano)
@@ -33,5 +33,10 @@ class CarroEsportivo extends Carro {
   void exibirDetalhes() {
     super.exibirDetalhes();
     print("Modo turbo: ${_modoTurbo ? "Ativado" : "Desativado"}");
+  }
+
+  @override
+  void ligar() {
+    ligado = false;
   }
 }
