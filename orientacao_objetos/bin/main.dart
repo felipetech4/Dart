@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'veiculo.dart';
 import 'carro.dart';
 import 'carroEsportivo.dart';
 import 'package:collection/collection.dart';
@@ -39,13 +38,13 @@ void main() {
           Carro c1 = Carro(marca, modelo, ano);
           carros.add(c1);
           print("O carro $modelo foi adicionado com sucesso!");
-        }else{
+        } else {
           CarroEsportivo cE1 = CarroEsportivo(marca, modelo, ano);
           carrosEsportivos.add(cE1);
           print("O carro esportivo $modelo foi adicionado com sucesso!");
         }
-          voltarMenu();
-          break;
+        voltarMenu();
+        break;
 
       case 2:
         print("\n== Lista de Carros ==");
