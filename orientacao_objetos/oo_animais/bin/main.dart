@@ -1,16 +1,14 @@
 import 'animal.dart';
 import 'cachorro.dart';
-import 'gato.dart';
-
 
 void main(){
-  List<Animal> animais = [];
+  Cachorro c1 = Cachorro("Vira-lata");
+  Cachorro c2 = Cachorro("Pitbull");
+  Cachorro c3 = Cachorro("Labrador");
 
-  animais.add(Cachorro());
-  animais.add(Gato());
-  animais.add(Cachorro());
+  c1.fazerSom();
+  c2.fazerSom();
+  c3.fazerSom();
 
-  for(Animal animal in animais){
-    animal.fazerSom();
-  }
+  Animal.exibirQuantidade();
 }

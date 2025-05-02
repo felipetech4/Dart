@@ -1,7 +1,7 @@
 import 'veiculo.dart';
 
 class Carro extends Veiculo {
-  Carro(String marca, String modelo, int ano) : super (marca, modelo, ano);
+  Carro(super.marca, super.modelo, super.ano);
 
   @override
   void ligar() {

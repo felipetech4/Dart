@@ -3,8 +3,7 @@ import 'veiculo.dart';
 class CarroEsportivo extends Veiculo {
   bool _modoTurbo = false;
   //Construtor
-  CarroEsportivo(String marca, String modelo, int ano)
-    : super(marca, modelo, ano);
+  CarroEsportivo(super.marca, super.modelo, super.ano);
   //Getter
   bool get modoTurbo => _modoTurbo;
   //Setter
