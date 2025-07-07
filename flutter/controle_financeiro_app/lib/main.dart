@@ -1,3 +1,5 @@
+//Alterando código main para escopo da tela inicial (pendente)
+
 import 'package:flutter/material.dart';
 
 void main() {
