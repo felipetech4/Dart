@@ -1,4 +1,4 @@
-//Escopo da tela inicial finalizado. Pendente criar modal para adicionar nova transação.
+//Pendente. Adicionar função hive para guardar o estado e criar filtros.
 
 import 'package:controle_financeiro_app/modelos/transacao.dart';
 import 'package:controle_financeiro_app/componentes/formulario_transacao.dart';
