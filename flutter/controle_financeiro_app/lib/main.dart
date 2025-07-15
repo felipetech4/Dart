@@ -1,5 +1,7 @@
 //Escopo da tela inicial finalizado. Pendente criar modal para adicionar nova transação.
 
+import 'package:controle_financeiro_app/modelos/transacao.dart';
+import 'package:controle_financeiro_app/componentes/formulario_transacao.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,50 +23,75 @@ class ControleFinanceiroApp extends StatelessWidget {
   }
 }
 
-class TelaInicial extends StatelessWidget {
+class TelaInicial extends StatefulWidget {
   const TelaInicial({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final List<Map<String, dynamic>> despesas = [
-      {'titulo': 'Supermercado', 'valor': 120.50, 'data': '06/07/2025'},
-      {'titulo': 'Internet', 'valor': 89.90, 'data': '05/07/2025'},
-      {'titulo': 'Gasolina', 'valor': 150.00, 'data': '03/07/2025'}
-    ];
+  State<TelaInicial> createState() => _TelaInicialState();
+}
 
+class _TelaInicialState extends State<TelaInicial>{
+  final List<Transacao> _transacoes = [
+    Transacao(titulo: 'Supermercado', valor: 120.50, data: DateTime(2025, 7, 6), tipo: 'despesa'), 
+    Transacao(titulo: 'Salário', valor: 3500.00, data: DateTime(2025, 7, 5), tipo: 'receita'),       
+  ];
+
+  //Abre o modal de cadastro
+  void _abrirFormTransacao(){
+    showModalBottomSheet(
+      context: context, 
+      isScrollControlled: true, 
+      builder: (_) => Padding(
+        padding: EdgeInsets.only(
+          top: 20,
+          left: 20,
+          right: 20,
+          //Empurra pra cima quando o teclado aparece
+          bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+        ),
+          child: FormularioTransacao(onSalvar: _adicionarTransacao),
+      )
+    );
+  }
+
+  //Adiciona nova transacao e fecha o modal
+  void _adicionarTransacao(Transacao nova){
+    setState(() => _transacoes.add(nova));
+    Navigator.of(context).pop();
+  }
+
+  @override
+  Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Minhas Despesas'),
+        title: const Text('Minhas Transações'),
       ),
       body: ListView.builder(
-        itemCount: despesas.length,
-        itemBuilder: (context, index){
-          final item = despesas[index];
+        itemCount: _transacoes.length,
+        itemBuilder: (ctx, i){
+          final t = _transacoes[i];
           return Card(
-            elevation: 2,
             margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             child: ListTile(
-              leading: const Icon(Icons.money_outlined),
-              title: Text(item['titulo']),
-              subtitle: Text('Data: ${item['data']}'),
+              leading: Icon(
+                t.tipo == 'despesa' ? Icons.arrow_downward : Icons.arrow_upward,
+                color: t.tipo == 'despesa' ? Colors.red : Colors.green,
+              ),
+              title: Text(t.titulo), 
+              subtitle:
+              Text(
+                '${t.data.day}/${t.data.month}/${t.data.year}'
+              ),
               trailing: Text(
-                'R\$ ${item['valor'].toStringAsFixed(2)}',
-                style: const TextStyle(
-                  color: Colors.redAccent,
-                  fontWeight: FontWeight.bold,
-                ),
+                'R\$ ${t.valor.toStringAsFixed(2)}',
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           );
         },
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          //Implementar funcionalidade para adicionar nova despesa
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Botão pressionado!')),
-          );
-        },
+        onPressed: _abrirFormTransacao,
         child: const Icon(Icons.add),
       ),
     );
