@@ -1,4 +1,4 @@
-//Pendente. Adicionar função hive para guardar o estado e criar filtros.
+//Pendente. Adicionar categorias.
 
 import 'package:controle_financeiro_app/modelos/transacao.dart';
 import 'package:controle_financeiro_app/componentes/formulario_transacao.dart';
@@ -32,8 +32,8 @@ class TelaInicial extends StatefulWidget {
 
 class _TelaInicialState extends State<TelaInicial>{
   final List<Transacao> _transacoes = [
-    Transacao(titulo: 'Supermercado', valor: 120.50, data: DateTime(2025, 7, 6), tipo: 'despesa'), 
-    Transacao(titulo: 'Salário', valor: 3500.00, data: DateTime(2025, 7, 5), tipo: 'receita'),       
+    Transacao(titulo: 'Supermercado', valor: 120.50, data: DateTime(2025, 7, 6), tipo: 'despesa', statusPago: true), 
+    Transacao(titulo: 'Salário', valor: 3500.00, data: DateTime(2025, 7, 5), tipo: 'receita', statusPago: true),       
   ];
 
   //Abre o modal de cadastro
@@ -75,12 +75,16 @@ class _TelaInicialState extends State<TelaInicial>{
             child: ListTile(
               leading: Icon(
                 t.tipo == 'despesa' ? Icons.arrow_downward : Icons.arrow_upward,
-                color: t.tipo == 'despesa' ? Colors.red : Colors.green,
+                color: t.statusPago ?
+                (
+                  t.tipo == 'despesa' ?
+                  Colors.red : Colors.green
+                ) : Colors.grey
               ),
               title: Text(t.titulo), 
               subtitle:
               Text(
-                '${t.data.day}/${t.data.month}/${t.data.year}'
+                '${t.data.day}/${t.data.month}/${t.data.year}\nStatus: ${t.statusPago ? "Pago/Recebido" : "Pendente"}'
               ),
               trailing: Text(
                 'R\$ ${t.valor.toStringAsFixed(2)}',

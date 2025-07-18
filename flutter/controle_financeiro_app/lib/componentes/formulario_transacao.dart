@@ -14,6 +14,7 @@ class FormularioTransacaoState extends State<FormularioTransacao> {
   final _valorCtrl = TextEditingController();
   DateTime _dataSelecionada = DateTime.now();
   String _tipoSelecionado = 'despesa';
+  bool _statusPago = false;
 
   void _abrirDatePicker() async {
     final data = await showDatePicker(
@@ -36,6 +37,7 @@ class FormularioTransacaoState extends State<FormularioTransacao> {
         valor: valor,
         data: _dataSelecionada,
         tipo: _tipoSelecionado,
+        statusPago: _statusPago
       ),
     );
   }
@@ -74,6 +76,13 @@ class FormularioTransacaoState extends State<FormularioTransacao> {
             DropdownMenuItem(value: 'receita', child: Text('Receita')),
           ],
           onChanged: (v) => setState(() => _tipoSelecionado = v!),
+        ),
+        SwitchListTile(
+          title: const Text(
+            'Pago / Recebido?'
+          ),
+          value: _statusPago,
+          onChanged: (val) => setState(() => _statusPago = val),
         ),
         const SizedBox(height: 10),
         ElevatedButton(
