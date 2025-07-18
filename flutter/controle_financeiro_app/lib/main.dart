@@ -32,8 +32,8 @@ class TelaInicial extends StatefulWidget {
 
 class _TelaInicialState extends State<TelaInicial>{
   final List<Transacao> _transacoes = [
-    Transacao(titulo: 'Supermercado', valor: 120.50, data: DateTime(2025, 7, 6), tipo: 'despesa', statusPago: true), 
-    Transacao(titulo: 'Salário', valor: 3500.00, data: DateTime(2025, 7, 5), tipo: 'receita', statusPago: true),       
+    Transacao(titulo: 'Supermercado', valor: 120.50, data: DateTime(2025, 7, 6), tipo: 'despesa', categoria: 'Alimentacao', statusPago: true), 
+    Transacao(titulo: 'Salário', valor: 3500.00, data: DateTime(2025, 7, 5), tipo: 'receita', categoria: 'Salario', statusPago: true),       
   ];
 
   //Abre o modal de cadastro
@@ -49,7 +49,7 @@ class _TelaInicialState extends State<TelaInicial>{
           //Empurra pra cima quando o teclado aparece
           bottom: MediaQuery.of(context).viewInsets.bottom + 20,
         ),
-          child: FormularioTransacao(onSalvar: _adicionarTransacao),
+          child: FormularioTransacao(salvarForm: _adicionarTransacao),
       )
     );
   }
@@ -84,7 +84,7 @@ class _TelaInicialState extends State<TelaInicial>{
               title: Text(t.titulo), 
               subtitle:
               Text(
-                '${t.data.day}/${t.data.month}/${t.data.year}\nStatus: ${t.statusPago ? "Pago/Recebido" : "Pendente"}'
+                '${t.data.day}/${t.data.month}/${t.data.year} · ${t.categoria}\n''Status: ${t.statusPago ? "Pago" : "Pendente"}'
               ),
               trailing: Text(
                 'R\$ ${t.valor.toStringAsFixed(2)}',

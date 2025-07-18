@@ -2,8 +2,8 @@ import 'package:controle_financeiro_app/modelos/transacao.dart';
 import 'package:flutter/material.dart';
 
 class FormularioTransacao extends StatefulWidget {
-  final void Function(Transacao) onSalvar;
-  const FormularioTransacao({super.key, required this.onSalvar});
+  final void Function(Transacao) salvarForm;
+  const FormularioTransacao({super.key, required this.salvarForm});
 
   @override
   State<FormularioTransacao> createState() => FormularioTransacaoState();
@@ -15,6 +15,16 @@ class FormularioTransacaoState extends State<FormularioTransacao> {
   DateTime _dataSelecionada = DateTime.now();
   String _tipoSelecionado = 'despesa';
   bool _statusPago = false;
+  final List<String> _categorias = [
+    'Alimentacao',
+    'Moradia',
+    'Transporte',
+    'Educação',
+    'Lazer',
+    'Salario',
+    'Outros',
+  ];
+  String _categoriaSelecionada = 'Alimentacao';
 
   void _abrirDatePicker() async {
     final data = await showDatePicker(
@@ -31,65 +41,83 @@ class FormularioTransacaoState extends State<FormularioTransacao> {
     final valor = double.tryParse(_valorCtrl.text.replaceAll(',', '.')) ?? 0;
     if (titulo.isEmpty || valor <= 0) return; //Validação
 
-    widget.onSalvar(
+    widget.salvarForm(
       Transacao(
         titulo: titulo,
         valor: valor,
         data: _dataSelecionada,
         tipo: _tipoSelecionado,
-        statusPago: _statusPago
+        categoria: _categoriaSelecionada,
+        statusPago: _statusPago,
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextField(
-          controller: _tituloCtrl,
-          decoration: const InputDecoration(labelText: 'Título'),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 10,
         ),
-        TextField(
-          controller: _valorCtrl,
-          decoration: const InputDecoration(labelText: 'Valor'),
-          keyboardType: TextInputType.number,
-        ),
-        Row(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Expanded(
-              child: Text(
-                'Data: ${_dataSelecionada.day}/${_dataSelecionada.month}/${_dataSelecionada.year}',
-              ),
+            TextField(
+              controller: _tituloCtrl,
+              decoration: const InputDecoration(labelText: 'Título'),
             ),
-            TextButton(
-              onPressed: _abrirDatePicker,
-              child: const Text('Selecionar Data'),
+            TextField(
+              controller: _valorCtrl,
+              decoration: const InputDecoration(labelText: 'Valor'),
+              keyboardType: TextInputType.number,
             ),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Data: ${_dataSelecionada.day}/${_dataSelecionada.month}/${_dataSelecionada.year}',
+                  ),
+                ),
+                TextButton(
+                  onPressed: _abrirDatePicker,
+                  child: const Text('Selecionar Data'),
+                ),
+              ],
+            ),
+            DropdownButton<String>(
+              value: _tipoSelecionado,
+              items: const [
+                DropdownMenuItem(value: 'despesa', child: Text('Despesa')),
+                DropdownMenuItem(value: 'receita', child: Text('Receita')),
+              ],
+              onChanged: (v) => setState(() => _tipoSelecionado = v!),
+            ),
+            DropdownButton<String>(
+              value: _categoriaSelecionada,
+              isExpanded: true,
+              items:
+                  _categorias.map((categoria) {
+                    return DropdownMenuItem(
+                      value: categoria,
+                      child: Text(categoria),
+                    );
+                  }).toList(),
+              onChanged: (val) => setState(() => _categoriaSelecionada = val!),
+            ),
+            SwitchListTile(
+              title: const Text('Pago?'),
+              value: _statusPago,
+              onChanged: (val) => setState(() => _statusPago = val),
+            ),
+            const SizedBox(height: 10),
+            ElevatedButton(onPressed: _submit, child: const Text('Salvar')),
           ],
         ),
-        DropdownButton<String>(
-          value: _tipoSelecionado,
-          items: const [
-            DropdownMenuItem(value: 'despesa', child: Text('Despesa')),
-            DropdownMenuItem(value: 'receita', child: Text('Receita')),
-          ],
-          onChanged: (v) => setState(() => _tipoSelecionado = v!),
-        ),
-        SwitchListTile(
-          title: const Text(
-            'Pago / Recebido?'
-          ),
-          value: _statusPago,
-          onChanged: (val) => setState(() => _statusPago = val),
-        ),
-        const SizedBox(height: 10),
-        ElevatedButton(
-          onPressed: _submit,
-          child: const Text('Salvar'),
-        ),
-      ],
+      ),
     );
   }
 }
