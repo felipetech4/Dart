@@ -1,8 +1,6 @@
-//Pendente. Adicionar categorias.
-
+import 'package:flutter/material.dart';
 import 'package:controle_financeiro_app/modelos/transacao.dart';
 import 'package:controle_financeiro_app/componentes/formulario_transacao.dart';
-import 'package:flutter/material.dart';
 
 void main() {
   runApp(const ControleFinanceiroApp());
@@ -16,7 +14,7 @@ class ControleFinanceiroApp extends StatelessWidget {
     return MaterialApp(
       title: 'Controle Financeiro',
       theme: ThemeData(
-        primarySwatch: Colors.green
+        primarySwatch: Colors.green,
       ),
       home: const TelaInicial(),
     );
@@ -30,72 +28,181 @@ class TelaInicial extends StatefulWidget {
   State<TelaInicial> createState() => _TelaInicialState();
 }
 
-class _TelaInicialState extends State<TelaInicial>{
+class _TelaInicialState extends State<TelaInicial> {
   final List<Transacao> _transacoes = [
-    Transacao(titulo: 'Supermercado', valor: 120.50, data: DateTime(2025, 7, 6), tipo: 'despesa', categoria: 'Alimentacao', statusPago: true), 
-    Transacao(titulo: 'Salário', valor: 3500.00, data: DateTime(2025, 7, 5), tipo: 'receita', categoria: 'Salario', statusPago: true),       
+    Transacao(
+      titulo: 'Salário',
+      valor: 3500.00,
+      data: DateTime(2025, 7, 5),
+      tipo: 'receita',
+      categoria: 'Salário',
+      statusPago: true,
+    ),
+    Transacao(
+      titulo: 'Supermercado',
+      valor: 200.00,
+      data: DateTime(2025, 7, 10),
+      tipo: 'despesa',
+      categoria: 'Alimentação',
+      statusPago: true,
+    ),
+    Transacao(
+      titulo: 'Conta de Luz',
+      valor: 150.00,
+      data: DateTime(2025, 7, 20),
+      tipo: 'despesa',
+      categoria: 'Contas',
+      statusPago: false,
+    ),
+    Transacao(
+      titulo: 'Freelancer',
+      valor: 500.00,
+      data: DateTime(2025, 7, 25),
+      tipo: 'receita',
+      categoria: 'Extra',
+      statusPago: false,
+    ),
   ];
 
-  //Abre o modal de cadastro
-  void _abrirFormTransacao(){
+  
+
+  void _abrirFormTransacao() {
     showModalBottomSheet(
-      context: context, 
-      isScrollControlled: true, 
+      context: context,
+      isScrollControlled: true,
       builder: (_) => Padding(
         padding: EdgeInsets.only(
           top: 20,
           left: 20,
           right: 20,
-          //Empurra pra cima quando o teclado aparece
           bottom: MediaQuery.of(context).viewInsets.bottom + 20,
         ),
-          child: FormularioTransacao(salvarForm: _adicionarTransacao),
-      )
+        child: FormularioTransacao(salvarForm: _adicionarTransacao),
+      ),
     );
   }
 
-  //Adiciona nova transacao e fecha o modal
-  void _adicionarTransacao(Transacao nova){
+  void _adicionarTransacao(Transacao nova) {
     setState(() => _transacoes.add(nova));
     Navigator.of(context).pop();
   }
 
+  Widget _construirCard(String titulo, String valor, Color cor) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        leading: Icon(Icons.attach_money, color: cor, size: 32),
+        title: Text(titulo),
+        subtitle: Text(
+          valor,
+          style: TextStyle(
+            color: cor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _construirCardInterativo(
+    BuildContext context,
+    String titulo,
+    String valor,
+    Color cor,
+    VoidCallback onTap,
+  ) {
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: ListTile(
+        leading: Icon(Icons.info_outline, color: cor, size: 32),
+        title: Text(titulo),
+        subtitle: Text(
+          valor,
+          style: TextStyle(
+            color: cor,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        trailing: const Icon(Icons.arrow_forward_ios),
+        onTap: onTap,
+      ),
+    );
+  }
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Minhas Transações'),
+        title: const Text('Controle Mensal'),
       ),
-      body: ListView.builder(
-        itemCount: _transacoes.length,
-        itemBuilder: (ctx, i){
-          final t = _transacoes[i];
-          return Card(
-            margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            child: ListTile(
-              leading: Icon(
-                t.tipo == 'despesa' ? Icons.arrow_downward : Icons.arrow_upward,
-                color: t.statusPago ?
-                (
-                  t.tipo == 'despesa' ?
-                  Colors.red : Colors.green
-                ) : Colors.grey
-              ),
-              title: Text(t.titulo), 
-              subtitle:
-              Text(
-                '${t.data.day}/${t.data.month}/${t.data.year} · ${t.categoria}\n''Status: ${t.statusPago ? "Pago" : "Pendente"}'
-              ),
-              trailing: Text(
-                'R\$ ${t.valor.toStringAsFixed(2)}',
-                style: const TextStyle(fontWeight: FontWeight.bold),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(color: Colors.blue),
+              child: Text(
+                'Menu',
+                style: TextStyle(color: Colors.white),
               ),
             ),
-          );
-        },
+            ListTile(
+              leading: const Icon(Icons.category),
+              title: const Text('Gerenciar Categorias'),
+              onTap: () {
+                // Criar tela de categorias
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.bar_chart),
+              title: const Text('Relatório Mensal'),
+              onTap: () {
+                // Criar tela de relatório
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.logout),
+              title: const Text('Sair'),
+              onTap: () {
+                // Criar funcionalidade de logout
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            _construirCard('Saldo Atual', 'R\$ 1.200,00', Colors.green),
+            _construirCard(
+                'Saldo Mensal Projetado', 'R\$ 800,00', Colors.blue),
+            _construirCardInterativo(
+              context,
+              'Receitas a Receber',
+              'R\$ 350,00',
+              Colors.orange,
+              () {
+                // Criar tela de receitas
+              },
+            ),
+            _construirCardInterativo(
+              context,
+              'Despesas a Pagar',
+              'R\$ 420,00',
+              Colors.red,
+              () {
+                // Criar tela de despesas
+              },
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _abrirFormTransacao,
+        tooltip: 'Adicionar Transação',
         child: const Icon(Icons.add),
       ),
     );
