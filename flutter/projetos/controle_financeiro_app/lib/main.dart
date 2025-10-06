@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:controle_financeiro_app/modelos/transacao.dart';
 import 'package:controle_financeiro_app/componentes/formulario_transacao.dart';
+import 'package:controle_financeiro_app/utils/calculos.dart';
 
 void main() {
   runApp(const ControleFinanceiroApp());
@@ -63,8 +64,6 @@ class _TelaInicialState extends State<TelaInicial> {
       statusPago: false,
     ),
   ];
-
-  
 
   void _abrirFormTransacao() {
     showModalBottomSheet(
@@ -133,6 +132,11 @@ class _TelaInicialState extends State<TelaInicial> {
 
   @override
   Widget build(BuildContext context) {
+    final saldoAtual = CalculosFinanceiros.calcularSaldoAtual(_transacoes);
+    final saldoProjetado = CalculosFinanceiros.calcularSaldoMensalProjetado(_transacoes);
+    final receitasPendentes = CalculosFinanceiros.calcularReceitasAReceber(_transacoes);
+    final despesasPendentes = CalculosFinanceiros.calcularDespesasAPagar(_transacoes);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Controle Mensal'),
@@ -176,13 +180,13 @@ class _TelaInicialState extends State<TelaInicial> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            _construirCard('Saldo Atual', 'R\$ 1.200,00', Colors.green),
+            _construirCard('Saldo Atual', 'R\$ ${saldoAtual.toStringAsFixed(2)}', Colors.green),
             _construirCard(
-                'Saldo Mensal Projetado', 'R\$ 800,00', Colors.blue),
+                'Saldo Mensal Projetado', 'R\$ ${saldoProjetado.toStringAsFixed(2)}', Colors.blue),
             _construirCardInterativo(
               context,
               'Receitas a Receber',
-              'R\$ 350,00',
+              'R\$ ${receitasPendentes.toStringAsFixed(2)}',
               Colors.orange,
               () {
                 // Criar tela de receitas
@@ -191,7 +195,7 @@ class _TelaInicialState extends State<TelaInicial> {
             _construirCardInterativo(
               context,
               'Despesas a Pagar',
-              'R\$ 420,00',
+              'R\$ ${despesasPendentes.toStringAsFixed(2)}',
               Colors.red,
               () {
                 // Criar tela de despesas
