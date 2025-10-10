@@ -27,6 +27,17 @@ class CartaoResumo extends StatelessWidget {
             const Divider(height: 24),
             _buildItem('Total Despesas', resumo.totalDespesasMes, Colors.red.shade400),
             _buildItem('Total Receitas', resumo.totalReceitasMes, Colors.green.shade400),
+            const SizedBox(height: 8),
+            const Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                'Mostrar detalhes',
+                style: TextStyle(
+                  color: Colors.blue,
+                  fontSize: 12,
+                ),
+              ),
+            ),
           ],
         ),
       ),

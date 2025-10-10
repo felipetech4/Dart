@@ -8,8 +8,12 @@ class CartaoSaldo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isPositive = resumo.limiteDisponivel >= resumo.saldoAtual;
-    final trendColor = isPositive ? Colors.green.shade200 : Colors.red.shade200;
+final double limite = resumo.limiteDisponivel;
+
+final Color trendColor = limite > 0
+    ? Colors.green.shade200
+    : (limite == 0 ? Colors.white : Colors.red.shade200);
+
 
     return Card(
       elevation: 4,
@@ -60,11 +64,12 @@ class CartaoSaldo extends StatelessWidget {
                     ),
                   ],
                 ),
-                Icon(
-                  isPositive ? Icons.trending_up : Icons.trending_down,
-                  color: trendColor,
-                  size: 32,
-                ),
+                if (limite != 0)
+                  Icon(
+                    limite > 0 ? Icons.trending_up : Icons.trending_down,
+                    color: trendColor,
+                    size: 32,
+                  ),
               ],
             ),
           ],
