@@ -85,7 +85,6 @@ O app vem com dados mockados para demonstração:
 
 ## Próximas Funcionalidades
 
-- Editar movimentações existentes
 - Filtros por período
 - Gráficos de gastos
 - Categorização de despesas

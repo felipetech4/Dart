@@ -122,4 +122,11 @@ class ServicoFinanceiro {
 
   void adicionarMovimentacao(Movimentacao movimentacao) =>
       _movimentacoes.add(movimentacao);
+
+  void atualizarMovimentacao(Movimentacao movimentacao) {
+    final index = _movimentacoes.indexWhere((mov) => mov.id == movimentacao.id);
+    if (index != -1) {
+      _movimentacoes[index] = movimentacao;
+    }
+  }
 }

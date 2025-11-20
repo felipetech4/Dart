@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'telas/tela_principal.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 void main() => runApp(const ControleFinanceiroApp());
 
 class ControleFinanceiroApp extends StatelessWidget {
@@ -11,6 +13,7 @@ class ControleFinanceiroApp extends StatelessWidget {
     return MaterialApp(
       title: 'Controle Financeiro',
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,

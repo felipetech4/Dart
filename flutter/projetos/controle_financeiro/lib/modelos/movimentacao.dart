@@ -56,4 +56,30 @@ class Movimentacao {
   String get descricaoCompleta => totalParcelas != null && parcelaAtual != null
       ? '$descricao ($parcelaAtual/$totalParcelas)'
       : descricao;
+
+  Movimentacao copyWith({
+    String? id,
+    String? descricao,
+    double? valor,
+    DateTime? dataVencimento,
+    TipoMovimentacao? tipo,
+    StatusMovimentacao? status,
+    DateTime? dataPagamento,
+    bool? isFixa,
+    int? totalParcelas,
+    int? parcelaAtual,
+    String? idGrupo,
+  }) => Movimentacao(
+    id: id ?? this.id,
+    descricao: descricao ?? this.descricao,
+    valor: valor ?? this.valor,
+    dataVencimento: dataVencimento ?? this.dataVencimento,
+    tipo: tipo ?? this.tipo,
+    status: status ?? this.status,
+    dataPagamento: dataPagamento ?? this.dataPagamento,
+    isFixa: isFixa ?? this.isFixa,
+    totalParcelas: totalParcelas ?? this.totalParcelas,
+    parcelaAtual: parcelaAtual ?? this.parcelaAtual,
+    idGrupo: idGrupo ?? this.idGrupo,
+  );
 }
